@@ -1,6 +1,6 @@
 package app
 
-import "github.com/gin-gonic/gin"
+import "net/http"
 
 type App struct {
 }
@@ -12,9 +12,9 @@ func New(opts Opts) *App {
 	return &App{}
 }
 
-func (a *App) Bootstrap(r gin.IRouter) {
-	if r != nil {
-		r.GET("/hello", a.hello)
+func (a *App) Bootstrap(mux *http.ServeMux) {
+	if mux != nil {
+		mux.HandleFunc("GET /hello", a.hello)
 	}
 }
 

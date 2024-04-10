@@ -2,21 +2,20 @@ package main
 
 import (
 	"flag"
+	"net/http"
 
-	"github.com/gin-gonic/gin"
-	"github.com/thebeet/cutie-backend/pkg/app"
+	"github.com/thebeet/cutie-backend/internal/app"
 )
 
 func main() {
 	flag.Parse()
 
-	gin.SetMode(gin.ReleaseMode)
-	r := gin.Default()
+	mux := http.NewServeMux()
 
 	webApp := app.New(app.Opts{})
-	webApp.Bootstrap(r)
+	webApp.Bootstrap(mux)
 
-	r.Run()
+	http.ListenAndServe("localhost:8080", mux)
 
 	webApp.Shutdown()
 }
